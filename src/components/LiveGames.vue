@@ -64,6 +64,7 @@ export default {
 .schedule {
   display: flex;
   flex-wrap: wrap;
+  /*okok*/
 }
 
 .button-live {
