@@ -6,7 +6,7 @@
 <!--     on enlevera le v show dans ce cas c'est plus logique de garder les scores "fixes"--> 
    <section class="schedule">
         <div class="game" v-for="(game, index) in games" :key="game.id" v-show="isVisible == true" v-on:click="displayPlayers(game.teams.visitors.id, game.teams.home.id)">
-            <p>{{ game.teams.home.nickname }} VS {{ game.teams.visitors.nickname }}</p>
+            <p class="versus">{{ game.teams.home.nickname }} VS {{ game.teams.visitors.nickname }}</p>
 
             <h1>Game n°{{ index+1 }}</h1>
             <div class="teamLogo">
@@ -37,6 +37,13 @@ import moment from "moment";
 
 export default {
     name: "LiveGames",
+/*     computed: {
+        playersOrganizeData: function() {
+            //this.players.sort(une fonction);
+
+        }
+    }, */
+
     data() {
         return {
             games: [],
@@ -44,6 +51,9 @@ export default {
             isVisible: true,
             //currentTeamSelected : 21,
             players : []
+           // search : "",
+           // playersSortType : "AZName"
+
         };
     },
     created: function () {
@@ -59,10 +69,11 @@ export default {
             const homePlayers = await getPlayersByTeamAndSeason(idHome, this.currentYear-1);
 
             this.players = [...visitorPlayers, ...homePlayers]
-
-/*             for (i = 0; i <visitorPlayers.length;  i++) {
+            /*             for (i = 0; i <visitorPlayers.length;  i++) {
                 this.players.push(visitorPlayers[i])
             } === this.players = [...visitorPlayers] */
+
+
             console.log(this.players);
 
         }
@@ -103,13 +114,21 @@ export default {
 }
 
 .game {
-  position: relative;
-  flex-basis: 25%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
-  cursor: pointer;
+    
+    position: relative;
+    flex-basis: 25%;
+    justify-content: center;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.versus{
+    font-family: 'Changa One', cursive;
+    font-size: xx-large;
+    text-align: center;
 }
 
 img{

@@ -44,6 +44,7 @@ nav li {
 }
 
 nav a {
+  font-family: 'Changa One', cursive;
   display: block;
   color: white;
   text-align: center;

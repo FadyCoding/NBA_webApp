@@ -35,7 +35,8 @@ export default CompPlayer
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
+  font-family: 'Changa One', cursive;
   text-align: left;
   /* margin-top: 60px; */
 
