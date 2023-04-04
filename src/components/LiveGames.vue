@@ -5,10 +5,14 @@
 
 <!--     on enlevera le v show dans ce cas c'est plus logique de garder les scores "fixes"--> 
    <section class="schedule">
-        <div class="game" v-for="(game, index) in games" :key="game.id" v-show="isVisible == true" v-on:click="$emit('onTeamIdChange', game.teams.home.id)">
+        <div class="game" v-for="(game, index) in games" :key="game.id" v-show="isVisible == true" v-on:click="displayPlayers(game.teams.visitors.id, game.teams.home.id)">
+            <p>{{ game.teams.home.nickname }} VS {{ game.teams.visitors.nickname }}</p>
+
             <h1>Game n°{{ index+1 }}</h1>
-            <p>Home {{ game.teams.home.name }} VS Visitors {{ game.teams.visitors.name }}</p>
-            <img src="game.team.home.logo" />
+            <div class="teamLogo">
+                <img :src="game.teams.home.logo" />
+                <img :src="game.teams.visitors.logo" />
+            </div>
             <p>Arena: {{ game.arena.name }}</p>
             <p>Date: {{ game.date.start }}</p>
             <p>Status: {{ game.status.long }}</p>
@@ -25,9 +29,10 @@
 </template>
 
 <script>
-import getPlayersByTeamAndSeason from '@/services/api/player_team_seasons';
+// import getPlayersByTeamAndSeason from '@/services/api/player_team_seasons';
 import getLiveGamesData from "@/services/api/games.js";
-import PlayerTeam from "./Player.vue";
+import getPlayersByTeamAndSeason from '@/services/api/player_team_seasons';
+import PlayerTeam from "./PlayerTeam.vue";
 import moment from "moment";
 
 export default {
@@ -37,7 +42,7 @@ export default {
             games: [],
             currentYear: moment().format('YYYY'),
             isVisible: true,
-            currentTeamSelected : 21,
+            //currentTeamSelected : 21,
             players : []
         };
     },
@@ -49,12 +54,24 @@ export default {
             this.games = await getLiveGamesData();
         },
 
-        onTeamIdChange: async function (teamId) {
-            const PlayersByTeamAndSeason = await getPlayersByTeamAndSeason(teamId, this.currentYear);
-            this.players = PlayersByTeamAndSeason.slice();
+        displayPlayers : async function (idVisitor, idHome) {
+            const visitorPlayers = await getPlayersByTeamAndSeason(idVisitor, this.currentYear-1);
+            const homePlayers = await getPlayersByTeamAndSeason(idHome, this.currentYear-1);
+
+            this.players = [...visitorPlayers, ...homePlayers]
+
+/*             for (i = 0; i <visitorPlayers.length;  i++) {
+                this.players.push(visitorPlayers[i])
+            } === this.players = [...visitorPlayers] */
+            console.log(this.players);
+
         }
     },
-    components: { PlayerTeam }
+    components: {
+        PlayerTeam
+
+    }
+
 }
 
 </script>
@@ -64,7 +81,6 @@ export default {
 .schedule {
   display: flex;
   flex-wrap: wrap;
-  /*okok*/
 }
 
 .button-live {
@@ -94,6 +110,17 @@ export default {
   border-radius: 5px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
   cursor: pointer;
+}
+
+img{
+    width: 4vw;
+    padding: 0 10%;
+}
+
+.teamLogo{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 

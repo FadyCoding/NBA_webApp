@@ -30,6 +30,9 @@ export default CompPlayer
 </script>
 
 <style>
+*{
+  margin: 0;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
