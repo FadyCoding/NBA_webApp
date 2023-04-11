@@ -1,6 +1,7 @@
 <template>
 
 <Navbar/>
+<Formulaire/>
 <LiveGames/>
 <Player/>  
 
@@ -9,6 +10,7 @@
 <script>
 import Navbar from './components/Navbar.vue'
 import LiveGames from './components/LiveGames.vue'
+import Formulaire from './components/Formulaire.vue'
 /* import getPlayerById from './services/api/player_data.js'*/
 
 /* getPlayerById(2);*/
@@ -19,7 +21,9 @@ const CompPlayer = {
 
     Navbar,
 
-    LiveGames
+    LiveGames,
+
+    Formulaire
 
     }
 

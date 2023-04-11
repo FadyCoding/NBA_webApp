@@ -37,12 +37,6 @@ import moment from "moment";
 
 export default {
     name: "LiveGames",
-/*     computed: {
-        playersOrganizeData: function() {
-            //this.players.sort(une fonction);
-
-        }
-    }, */
 
     data() {
         return {
@@ -56,9 +50,11 @@ export default {
 
         };
     },
+
     created: function () {
         this.retrieveLiveGamesData();
     },
+
     methods: {
         async retrieveLiveGamesData() {
             this.games = await getLiveGamesData();
@@ -78,6 +74,7 @@ export default {
 
         }
     },
+
     components: {
         PlayerTeam
 
