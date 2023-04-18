@@ -23,12 +23,16 @@
         </div>
     </section>
     <section>
-        <PlayerTeam :player="player" v-for="player in players" :key="player.id"/>
+         <PlayerTeam :player="player" v-for="player in players" :key="player.firstname" />
+        <!-- <PlayerTeam v-for="player in playersOrganizedData" :key="player.id" :firstname="player.firstname" :lastname="player.lastname"/> -->
     </section>
 
 </template>
 
 <script>
+//faire en sorte que ça clique sur logo GSW pour display GSW's player
+//Sort out the players bu their firstname by solving the computing data issue
+
 // import getPlayersByTeamAndSeason from '@/services/api/player_team_seasons';
 import getLiveGamesData from "@/services/api/games.js";
 import getPlayersByTeamAndSeason from '@/services/api/player_team_seasons';
@@ -38,15 +42,26 @@ import moment from "moment";
 export default {
     name: "LiveGames",
 
+    computed: {
+        playersOrganizedData: function() {
+            const field = ["AZName", "ZAName"].includes(this.playersSortType) ? "firstname" : "lastname";
+            const filterFunc = (a) => a.firstname.toLowerCase().includes(this.search.toLowerCase())
+            const comparator = (a,b) => a[field].localeCompare(b[field])
+            let data = this.players.filter(filterFunc)
+            data = data.sort(comparator)
+            return data
+        }   
+    },
+
     data() {
         return {
             games: [],
             currentYear: moment().format('YYYY'),
             isVisible: true,
             //currentTeamSelected : 21,
-            players : []
-           // search : "",
-           // playersSortType : "AZName"
+            players : [],
+            search : "",
+            playersSortType : "AZName"
 
         };
     },
