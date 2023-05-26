@@ -1,15 +1,12 @@
 <template>
     <form>
-      <label for="firstname">Firstname:</label>
-      <input type="text" id="firstname" name="firstname" v-model="firstname" required>
-      
-      <label for="lastname">Lastname:</label>
-      <input type="text" id="lastname" name="lastname" v-model="lastname" required>
-  
-      <label for="team">Team:</label>
-      <input type="text" id="team" name="team" v-model="team" required>
-      
-      <button type="submit" @click.prevent="validateForm()">Submit</button>
+      <select v-model="key" @change="onSortChange($event)">
+        <option value="height">Height</option>
+        <option value="weight">Weight</option>
+        <option value="firstname">Firstname</option>
+      </select>
+
+      Sort by : {{ sort }}
     </form>
   </template>
   
@@ -25,30 +22,19 @@
 
     data() {
       return {
-        firstname: "",
-        lastname: "",
-        team: "",
+        sort: localStorage.getItem("sort") || "height"
       };
     },
 
-    mounted() {
-      // populate form fields with player data
-      this.firstname = this.player.firstname;
-      this.lastname = this.player.lastname;
-      this.team = this.player.team;
-    },
-    
     methods: {
-      validateForm() {
-        if (this.firstname === "" || this.lastname === "" || this.team === "") {
-          alert("Please fill in all fields");
-          return false;
-        }
-        // additional validation logic can be added here
-        return true;
-      },
-    },
-  };
+      onSortChange(e) {
+        console.log(e.target.value)
+        this.sort = e.target.value
+        localStorage.setItem("sort", e.target.value)
+      }
+    }
+
+  }
   </script>
   
   <style>

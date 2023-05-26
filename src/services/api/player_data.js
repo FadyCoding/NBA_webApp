@@ -2,7 +2,6 @@ import API from "./config";
 
 
 export default function getPlayerById(id_player){
-/* on concatene la chaine de caractere */
 	return fetch(API.baseUrl+'players?id='+id_player, API.options)
 		.then(response => response.json())
 		.then(response => {console.log(response)

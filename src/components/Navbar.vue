@@ -2,12 +2,7 @@
 
 <nav>
     <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Seasons</a></li>
-        <li><a href="#">Games</a></li>
-        <li><a href="#">Players</a></li>
-        <li><a href="#">Stats</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="#">Welcome to the NBA Live Game App</a></li>
     </ul>
 </nav>
 
